@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, FileText } from 'lucide-react';
 
 export default function CancellationRefundPage() {
   return (
@@ -31,7 +30,7 @@ export default function CancellationRefundPage() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed"
           >
-            We believe in transparency and fairness. Here's everything you need to know about our policies.
+            We believe in transparency and fairness. Here&apos;s everything you need to know about our policies.
           </motion.p>
         </div>
       </section>

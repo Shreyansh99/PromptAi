@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+
 import { Sparkles, Quote } from 'lucide-react'
 
 const testimonials = [
@@ -79,7 +79,7 @@ export default function Testimonials() {
                 <Quote className="w-6 h-6" />
               </div>
               <div className="mb-4">
-                <p className="text-gray-700 leading-relaxed text-sm mb-4">"{testimonial.quote}"</p>
+                <p className="text-gray-700 leading-relaxed text-sm mb-4">&ldquo;{testimonial.quote}&rdquo;</p>
               </div>
               <div className="flex items-center">
                 <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 border-2 border-purple-200">

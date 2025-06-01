@@ -65,7 +65,7 @@ export default function FAQPage() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-3xl md:text-4xl font-black text-slate-900 mb-3 leading-tight"
           >
-            Got Questions? We've Got{' '}
+            Got Questions? We&apos;ve Got{' '}
             <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
               Answers
             </span>
@@ -182,7 +182,7 @@ export default function FAQPage() {
               transition={{ delay: 1, duration: 0.4 }}
               className="text-white/90 max-w-lg mx-auto text-sm leading-relaxed mb-6"
             >
-              Join thousands who've transformed their AI interactions with PromptPilot.
+              Join thousands who&apos;ve transformed their AI interactions with PromptPilot.
             </motion.p>
 
             <motion.div

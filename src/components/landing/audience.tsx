@@ -60,7 +60,7 @@ export default function Audience() {
             viewport={{ once: true }}
             className="text-lg text-center max-w-3xl mx-auto text-gray-600 leading-relaxed"
           >
-            AI is only as good as the prompts you give it. Whether you're creating content, analyzing data, or experimenting with AI tools, PromptPilot helps you get the best results—faster.
+            AI is only as good as the prompts you give it. Whether you&apos;re creating content, analyzing data, or experimenting with AI tools, PromptPilot helps you get the best results—faster.
           </motion.p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import Image from 'next/image'
-import Link from 'next/link'
 import { Sparkles, Zap, Brain, Target } from 'lucide-react'
 
 export default function HeroSection() {

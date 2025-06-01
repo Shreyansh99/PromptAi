@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { UserPlus, Wand2, Rocket, Sparkles } from 'lucide-react'
+import { Wand2, Rocket, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
 const steps = [
