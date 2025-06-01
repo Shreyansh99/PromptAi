@@ -17,7 +17,7 @@ const Footer = () => {
             <Link href="/" className="flex items-center gap-2">
               <Sparkles className="h-6 w-6 text-purple-600" />
               <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
-                Prompt Genie
+                PromptPilot
               </span>
             </Link>
             <p className="text-gray-600 dark:text-gray-400">
@@ -53,7 +53,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-gray-600 dark:text-gray-400">
-          <p>© 2024 Prompt Genie. All rights reserved.</p>
+          <p>© 2024 PromptPilot. All rights reserved.</p>
         </div>
       </div>
     </motion.footer>

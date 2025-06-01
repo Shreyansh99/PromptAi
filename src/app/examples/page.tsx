@@ -43,7 +43,7 @@ const ExamplesPage = () => {
             Prompt Examples
           </h1>
           <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
-            See how Prompt Genie transforms basic prompts into powerful, detailed instructions
+            See how PromptPilot transforms basic prompts into powerful, detailed instructions
           </p>
         </motion.div>
 

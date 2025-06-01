@@ -120,3 +120,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .text-crisp {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}

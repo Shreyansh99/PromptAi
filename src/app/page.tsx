@@ -1,5 +1,4 @@
 import HeroSection from '@/components/landing/hero'
-import TrustedBy from '@/components/landing/trustedby'
 import FeatureDualCards from '@/components/landing/featuredualcards'
 import Audience from '@/components/landing/audience'
 import Features from '@/components/landing/features'
@@ -11,11 +10,10 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <TrustedBy />
       <FeatureDualCards />
       <Audience />
-      <Features />
       <HowItWorks />
+      <Features />
       <Testimonials />
       <CTA />
     </>

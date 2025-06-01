@@ -7,8 +7,8 @@ import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 
 export const metadata: Metadata = {
-  title: "Prompt Genie - AI Prompt Optimizer",
-  description: "Transform your ideas into powerful AI prompts with Prompt Genie",
+  title: "PromptPilot - AI Prompt Optimizer",
+  description: "Transform your ideas into powerful AI prompts with PromptPilot",
 };
 
 export default function RootLayout({
@@ -18,9 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-modern-glass font-sans">
+      <body className="bg-white font-sans">
         <Navbar />
-        {children}
+        <main className="pt-16">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

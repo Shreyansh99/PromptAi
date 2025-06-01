@@ -9,7 +9,7 @@ const pricingPlans = [
   {
     name: 'Free',
     price: '$0',
-    description: 'Perfect for trying out Prompt Genie',
+    description: 'Perfect for trying out PromptPilot',
     features: [
       '5 prompts per day',
       'Basic optimization',
