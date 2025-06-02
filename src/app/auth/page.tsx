@@ -68,9 +68,10 @@ export default function AuthPage() {
           router.push('/dashboard')
         }
       }
-    } catch (error: any) {
-      if (!error.message.includes('Email not confirmed')) {
-        setError(error.message)
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      if (!errorMessage.includes('Email not confirmed')) {
+        setError(errorMessage)
       }
     } finally {
       setLoading(false)
@@ -94,8 +95,9 @@ export default function AuthPage() {
       setResendSuccess(true)
       // Hide success message after 3 seconds
       setTimeout(() => setResendSuccess(false), 3000)
-    } catch (error: any) {
-      setError(error.message)
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      setError(errorMessage)
     } finally {
       setResendLoading(false)
     }
@@ -124,9 +126,10 @@ export default function AuthPage() {
       // OAuth redirect will happen automatically if successful
       console.log('OAuth initiated successfully:', data)
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('OAuth Error Details:', error)
-      setError(`OAuth Error: ${error.message}`)
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      setError(`OAuth Error: ${errorMessage}`)
       setLoading(false)
     }
   }
@@ -408,7 +411,7 @@ export default function AuthPage() {
               {/* Toggle Auth Mode */}
               <div className="text-center pt-4 border-t border-slate-100">
                 <p className="text-sm text-slate-600">
-                  {isLogin ? "Don't have an account?" : "Already have an account?"}
+                  {isLogin ? "Don&apos;t have an account?" : "Already have an account?"}
                   <button
                     type="button"
                     onClick={() => {

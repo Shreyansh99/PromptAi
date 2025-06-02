@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -21,18 +20,15 @@ import {
   Plus,
   BookOpen,
   Star,
-  Search,
   Settings,
   LogOut,
-  Zap,
-  Lightbulb,
   User,
   CreditCard,
   ChevronDown
 } from 'lucide-react'
 
 export default function DashboardPage() {
-  const { user, loading, signOut, isAuthenticated } = useAuth({
+  const { user, loading, signOut } = useAuth({
     redirectTo: '/',
     requireAuth: true
   })
@@ -260,7 +256,7 @@ export default function DashboardPage() {
                       onChange={(e) => setPromptInput(e.target.value)}
                       placeholder="writing blog posts"
                       className="w-full h-20 text-base py-4 px-4 border border-slate-300 bg-white resize-none placeholder:text-slate-400 focus:outline-none rounded-lg"
-                      onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handlePromptSubmit()}
+                      onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handlePromptSubmit()}
                     />
                   </div>
 

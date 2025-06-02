@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { GetStartedButton } from '@/components/ui/get-started-button'
 import { Sparkles, Zap, Brain, Target } from 'lucide-react'
-import Link from 'next/link'
 
 export default function HeroSection() {
   return (
