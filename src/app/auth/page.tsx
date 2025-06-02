@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Sparkles, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
 import { GoogleLogo } from '@/components/ui/google-logo'
+import { getFullUrl } from '@/lib/utils/url'
 
 export default function AuthPage() {
   const router = useRouter()
@@ -54,7 +55,7 @@ export default function AuthPage() {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`
+            emailRedirectTo: getFullUrl('/auth/callback')
           }
         })
         if (error) throw error
@@ -87,7 +88,7 @@ export default function AuthPage() {
         type: 'signup',
         email: email,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`
+          emailRedirectTo: getFullUrl('/auth/callback')
         }
       })
       if (error) throw error
@@ -110,7 +111,7 @@ export default function AuthPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`,
+          redirectTo: getFullUrl('/dashboard'),
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
