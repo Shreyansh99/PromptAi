@@ -222,7 +222,7 @@ export default function AuthPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 mb-2">Check your email</h3>
                     <p className="text-slate-600 text-sm mb-4">
-                      We've sent a confirmation link to <strong>{email}</strong>.
+                      We&apos;ve sent a confirmation link to <strong>{email}</strong>.
                       Click the link in the email to activate your account.
                     </p>
 
