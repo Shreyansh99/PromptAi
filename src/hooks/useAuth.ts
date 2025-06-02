@@ -77,17 +77,12 @@ export function useAuth(options: UseAuthOptions = {}) {
 
         console.log('Auth state change:', event, session?.user?.email)
 
-        if (event === 'SIGNED_OUT' || !session) {
+        if (event === 'SIGNED_OUT' || (!session && event !== 'INITIAL_SESSION')) {
           setUser(null)
           if (requireAuth) {
             router.push(redirectTo)
           }
-        } else if (event === 'SIGNED_IN' && session?.user) {
-          setUser(session.user)
-          setLoading(false)
-        } else if (event === 'TOKEN_REFRESHED' && session?.user) {
-          setUser(session.user)
-        } else if (event === 'INITIAL_SESSION' && session?.user) {
+        } else if (session?.user) {
           setUser(session.user)
           setLoading(false)
         }
