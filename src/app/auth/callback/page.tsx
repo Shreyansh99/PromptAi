@@ -17,6 +17,11 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
+        console.log('Auth callback started')
+        console.log('Current URL:', window.location.href)
+        console.log('Search params:', window.location.search)
+        console.log('Hash params:', window.location.hash)
+
         // First, try to handle the auth callback from URL
         const { data, error } = await supabase.auth.getSession()
 
@@ -28,11 +33,12 @@ export default function AuthCallbackPage() {
         }
 
         if (data.session) {
+          console.log('Existing session found:', data.session.user.email)
           setStatus('success')
           setMessage('Successfully signed in! Redirecting to dashboard...')
 
           // Redirect immediately for existing sessions
-          router.push('/dashboard')
+          setTimeout(() => router.push('/dashboard'), 1000)
           return
         }
 
@@ -47,6 +53,7 @@ export default function AuthCallbackPage() {
         const code = searchParams.get('code')
 
         if (code) {
+          console.log('OAuth code found, exchanging for session...')
           // Handle OAuth code exchange
           const { data: sessionData, error: sessionError } = await supabase.auth.exchangeCodeForSession(code)
 
@@ -58,12 +65,14 @@ export default function AuthCallbackPage() {
           }
 
           if (sessionData.session) {
+            console.log('OAuth session created successfully:', sessionData.session.user.email)
             setStatus('success')
             setMessage('Successfully signed in! Redirecting to dashboard...')
-            router.push('/dashboard')
+            setTimeout(() => router.push('/dashboard'), 1000)
             return
           }
         } else if (accessToken && refreshToken) {
+          console.log('Access token found, setting session...')
           // Handle token-based auth (email confirmation)
           const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
             access_token: accessToken,
@@ -78,9 +87,10 @@ export default function AuthCallbackPage() {
           }
 
           if (sessionData.session) {
+            console.log('Token session created successfully:', sessionData.session.user.email)
             setStatus('success')
             setMessage(type === 'signup' ? 'Email confirmed successfully! Redirecting to dashboard...' : 'Successfully signed in! Redirecting to dashboard...')
-            router.push('/dashboard')
+            setTimeout(() => router.push('/dashboard'), 1000)
             return
           }
         }
@@ -90,11 +100,13 @@ export default function AuthCallbackPage() {
         const errorDescription = hashParams.get('error_description') || searchParams.get('error_description')
 
         if (authError) {
+          console.error('Auth error from URL:', authError, errorDescription)
           setStatus('error')
           setMessage(errorDescription || 'Authentication failed.')
         } else {
+          console.error('No valid auth parameters found in URL')
           setStatus('error')
-          setMessage('Invalid authentication link.')
+          setMessage('Invalid authentication link. Please try signing in again.')
         }
       } catch (error) {
         console.error('Callback error:', error)

@@ -108,10 +108,13 @@ export default function AuthPage() {
     setLoading(true)
     setError('')
     try {
+      const redirectUrl = getFullUrl('/auth/callback')
+      console.log('Initiating Google OAuth with redirect URL:', redirectUrl)
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: getFullUrl('/auth/callback'),
+          redirectTo: redirectUrl,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
