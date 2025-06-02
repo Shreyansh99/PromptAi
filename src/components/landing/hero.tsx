@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sparkles, Zap, Brain, Target } from 'lucide-react'
+import Link from 'next/link'
 
 export default function HeroSection() {
   return (
@@ -106,9 +107,11 @@ export default function HeroSection() {
             transition={{ delay: 0.2, duration: 0.4 }}
             className="flex flex-col sm:flex-row items-center gap-4 mt-4"
           >
-            <Button size="lg" className="bg-gradient-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 text-white font-bold px-6 py-3 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105">
-              🚀 Get Started for FREE
-            </Button>
+            <Link href="/auth">
+              <Button size="lg" className="bg-gradient-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 text-white font-bold px-6 py-3 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105">
+                🚀 Get Started for FREE
+              </Button>
+            </Link>
             <a href="/pricing" className="text-slate-700 font-semibold hover:text-purple-600 transition-colors duration-150 flex items-center gap-2 group">
               View Pricing
               <span className="text-purple-600 group-hover:translate-x-1 transition-transform duration-150">→</span>

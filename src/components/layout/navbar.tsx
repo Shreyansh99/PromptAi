@@ -32,7 +32,7 @@ const Navbar = () => {
           <Link href="/faq" className="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-200">
             FAQ
           </Link>
-          <Link href="/signup">
+          <Link href="/auth">
             <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               Get Started
             </Button>
