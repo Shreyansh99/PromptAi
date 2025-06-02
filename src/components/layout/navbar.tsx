@@ -22,7 +22,7 @@ const Navbar = () => {
           </span>
         </Link>
 
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-6">
           <Link href="/pricing" className="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-200">
             Pricing
           </Link>

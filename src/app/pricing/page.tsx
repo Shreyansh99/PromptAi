@@ -30,19 +30,6 @@ const pricingPlans = [
       'Team collaboration'
     ],
     popular: true
-  },
-  {
-    name: 'Enterprise',
-    price: 'Custom',
-    description: 'For large organizations',
-    features: [
-      'Everything in Pro',
-      'Custom integrations',
-      'Dedicated support',
-      'SLA guarantee',
-      'Custom development',
-      'Advanced analytics'
-    ]
   }
 ]
 
@@ -63,7 +50,7 @@ const PricingPage = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -88,7 +75,7 @@ const PricingPage = () => {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button 
+                  <Button
                     className={`w-full ${plan.popular ? 'bg-gradient-to-r from-purple-600 to-blue-600' : ''}`}
                   >
                     Get Started

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -28,6 +29,7 @@ import {
 } from 'lucide-react'
 
 export default function DashboardPage() {
+  const router = useRouter()
   const { user, loading, signOut } = useAuth({
     redirectTo: '/',
     requireAuth: true
@@ -181,7 +183,10 @@ export default function DashboardPage() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer hover:bg-purple-50 focus:bg-purple-50">
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-purple-50 focus:bg-purple-50"
+                onClick={() => router.push('/dashboard/pricing')}
+              >
                 <CreditCard className="mr-2 h-4 w-4 text-purple-600" />
                 <span className="text-slate-700">Upgrade to Pro</span>
               </DropdownMenuItem>
