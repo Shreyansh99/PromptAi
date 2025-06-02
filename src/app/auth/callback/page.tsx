@@ -86,10 +86,10 @@ export default function AuthCallbackPage() {
         }
 
         // Check for error parameters
-        const error = hashParams.get('error') || searchParams.get('error')
+        const authError = hashParams.get('error') || searchParams.get('error')
         const errorDescription = hashParams.get('error_description') || searchParams.get('error_description')
 
-        if (error) {
+        if (authError) {
           setStatus('error')
           setMessage(errorDescription || 'Authentication failed.')
         } else {
