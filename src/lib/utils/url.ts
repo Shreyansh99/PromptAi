@@ -4,17 +4,27 @@
  * In development, fall back to window.location.origin
  */
 export function getBaseUrl(): string {
-  // For server-side rendering or when NEXT_PUBLIC_SITE_URL is set
+  // Priority 1: Explicitly set NEXT_PUBLIC_SITE_URL
   if (process.env.NEXT_PUBLIC_SITE_URL) {
     return process.env.NEXT_PUBLIC_SITE_URL
   }
-  
-  // For client-side in development
-  if (typeof window !== 'undefined') {
-    return window.location.origin
+
+  // Priority 2: Vercel deployment URL
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   }
-  
-  // Fallback for server-side in development
+
+  // Priority 3: For client-side, use current origin (but avoid localhost in production)
+  if (typeof window !== 'undefined') {
+    const origin = window.location.origin
+    // If we're in production but still seeing localhost, something is wrong
+    if (process.env.NODE_ENV === 'production' && origin.includes('localhost')) {
+      console.warn('Production environment detected but using localhost URL. Please set NEXT_PUBLIC_SITE_URL.')
+    }
+    return origin
+  }
+
+  // Priority 4: Fallback for server-side in development
   return 'http://localhost:3000'
 }
 
