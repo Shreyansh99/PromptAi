@@ -38,7 +38,7 @@ const pricingPlans = [
 
 export default function DashboardPricingPage() {
   const router = useRouter()
-  const { user, loading } = useAuth({
+  const { loading } = useAuth({
     redirectTo: '/',
     requireAuth: true
   })
