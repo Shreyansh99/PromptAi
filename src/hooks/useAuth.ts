@@ -85,6 +85,12 @@ export function useAuth(options: UseAuthOptions = {}) {
         } else if (session?.user) {
           setUser(session.user)
           setLoading(false)
+
+          // If user just signed in and we're on auth page, redirect to dashboard
+          if (typeof window !== 'undefined' && window.location.pathname.startsWith('/auth')) {
+            console.log('User signed in on auth page, redirecting to dashboard')
+            router.push('/dashboard')
+          }
         }
       }
     )

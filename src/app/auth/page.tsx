@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -38,6 +38,22 @@ export default function AuthPage() {
   const [emailSent, setEmailSent] = useState(false)
   const [resendLoading, setResendLoading] = useState(false)
   const [resendSuccess, setResendSuccess] = useState(false)
+
+  // Check if user is already authenticated
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session) {
+          console.log('User already authenticated, redirecting to dashboard')
+          router.push('/dashboard')
+        }
+      } catch (error) {
+        console.error('Auth check error:', error)
+      }
+    }
+    checkAuth()
+  }, [router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -121,7 +137,9 @@ export default function AuthPage() {
     setError('')
     try {
       const redirectUrl = getFullUrl('/auth/callback')
-      const { error } = await supabase.auth.signInWithOAuth({
+      console.log('Initiating Google OAuth with redirect URL:', redirectUrl)
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: redirectUrl,
@@ -131,8 +149,19 @@ export default function AuthPage() {
           },
         },
       })
-      if (error) throw error
+
+      if (error) {
+        console.error('OAuth Error:', error)
+        throw error
+      }
+
+      // OAuth redirect will happen automatically if successful
+      console.log('OAuth initiated successfully:', data)
+      // Note: The browser will redirect to Google, then back to our callback URL
+      // The callback page will handle the session creation and redirect to dashboard
+
     } catch (error: unknown) {
+      console.error('OAuth Error Details:', error)
       const errorMessage = error instanceof Error ? error.message : 'An error occurred'
       setError(`OAuth Error: ${errorMessage}`)
       setLoading(false)
