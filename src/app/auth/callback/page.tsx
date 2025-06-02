@@ -17,49 +17,69 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
-        // Get the URL hash parameters
-        const hashParams = new URLSearchParams(window.location.hash.substring(1))
-        const accessToken = hashParams.get('access_token')
-        const refreshToken = hashParams.get('refresh_token')
-        const type = hashParams.get('type')
+        // Handle the auth callback using Supabase's built-in method
+        const { data, error } = await supabase.auth.getSession()
 
-        if (type === 'signup' && accessToken && refreshToken) {
-          // Set the session
-          const { data, error } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken
-          })
+        if (error) {
+          console.error('Session error:', error)
+          setStatus('error')
+          setMessage('Authentication failed. Please try again.')
+          return
+        }
 
-          if (error) {
-            console.error('Session error:', error)
-            setStatus('error')
-            setMessage('Failed to confirm email. Please try again.')
-            return
-          }
+        if (data.session) {
+          setStatus('success')
+          setMessage('Successfully signed in! Redirecting to dashboard...')
 
-          if (data.session) {
-            setStatus('success')
-            setMessage('Email confirmed successfully! Redirecting to dashboard...')
-
-            // Redirect after a short delay
-            setTimeout(() => {
-              router.push('/dashboard')
-            }, 2000)
-          } else {
-            setStatus('error')
-            setMessage('Email confirmation completed but session could not be established. Please try signing in.')
-          }
+          // Redirect after a short delay
+          setTimeout(() => {
+            router.push('/dashboard')
+          }, 1500)
         } else {
-          // Check for error parameters
-          const error = hashParams.get('error')
-          const errorDescription = hashParams.get('error_description')
-          
-          if (error) {
-            setStatus('error')
-            setMessage(errorDescription || 'Email confirmation failed.')
+          // Try to get session from URL parameters (for email confirmation)
+          const hashParams = new URLSearchParams(window.location.hash.substring(1))
+          const accessToken = hashParams.get('access_token')
+          const refreshToken = hashParams.get('refresh_token')
+          const type = hashParams.get('type')
+
+          if (accessToken && refreshToken) {
+            // Set the session
+            const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken
+            })
+
+            if (sessionError) {
+              console.error('Session error:', sessionError)
+              setStatus('error')
+              setMessage('Failed to establish session. Please try signing in again.')
+              return
+            }
+
+            if (sessionData.session) {
+              setStatus('success')
+              setMessage(type === 'signup' ? 'Email confirmed successfully! Redirecting to dashboard...' : 'Successfully signed in! Redirecting to dashboard...')
+
+              // Redirect after a short delay
+              setTimeout(() => {
+                router.push('/dashboard')
+              }, 1500)
+            } else {
+              setStatus('error')
+              setMessage('Authentication completed but session could not be established. Please try signing in.')
+            }
           } else {
-            setStatus('error')
-            setMessage('Invalid confirmation link.')
+            // Check for error parameters
+            const error = hashParams.get('error')
+            const errorDescription = hashParams.get('error_description')
+
+            if (error) {
+              setStatus('error')
+              setMessage(errorDescription || 'Authentication failed.')
+            } else {
+              setStatus('error')
+              setMessage('Invalid authentication link.')
+            }
           }
         }
       } catch (error) {
