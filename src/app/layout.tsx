@@ -5,6 +5,7 @@ import "@fontsource/fira-mono/400.css";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import { ConditionalLayout } from "@/components/layout/conditional-layout";
 
 export const metadata: Metadata = {
   title: "PromptPilot - AI Prompt Optimizer",
@@ -19,11 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white font-sans">
-        <Navbar />
-        <main className="pt-16">
+        <ConditionalLayout>
           {children}
-        </main>
-        <Footer />
+        </ConditionalLayout>
       </body>
     </html>
   );

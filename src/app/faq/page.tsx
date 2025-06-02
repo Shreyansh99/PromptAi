@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { GetStartedButton } from '@/components/ui/get-started-button';
 import { Plus, Minus, Sparkles, HelpCircle } from 'lucide-react';
 
 const faqs = [
@@ -191,12 +191,12 @@ export default function FAQPage() {
               transition={{ delay: 1.1, duration: 0.4 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-3"
             >
-              <Button
+              <GetStartedButton
                 size="sm"
                 className="bg-white text-purple-700 hover:bg-gray-50 font-bold px-6 py-2.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-sm"
               >
                 🚀 Get Started FREE
-              </Button>
+              </GetStartedButton>
               <a
                 href="/pricing"
                 className="text-white/90 font-semibold hover:text-white transition-colors duration-200 flex items-center gap-1 group text-sm"

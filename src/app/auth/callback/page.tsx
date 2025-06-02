@@ -40,11 +40,14 @@ export default function AuthCallbackPage() {
           if (data.session) {
             setStatus('success')
             setMessage('Email confirmed successfully! Redirecting to dashboard...')
-            
+
             // Redirect after a short delay
             setTimeout(() => {
-              router.push('/')
+              router.push('/dashboard')
             }, 2000)
+          } else {
+            setStatus('error')
+            setMessage('Email confirmation completed but session could not be established. Please try signing in.')
           }
         } else {
           // Check for error parameters

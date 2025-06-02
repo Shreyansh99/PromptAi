@@ -48,7 +48,7 @@ export default function AuthPage() {
           }
           throw error
         }
-        router.push('/')
+        router.push('/dashboard')
       } else {
         const { data, error } = await supabase.auth.signUp({
           email,
@@ -65,7 +65,7 @@ export default function AuthPage() {
           setError('')
         } else if (data.session) {
           // User is automatically signed in (email confirmation disabled)
-          router.push('/')
+          router.push('/dashboard')
         }
       }
     } catch (error: any) {
@@ -108,7 +108,7 @@ export default function AuthPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/`,
+          redirectTo: `${window.location.origin}/dashboard`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',

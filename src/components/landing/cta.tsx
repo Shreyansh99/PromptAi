@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { GetStartedButton } from '@/components/ui/get-started-button'
 import { Sparkles, ArrowRight } from 'lucide-react'
 
 export default function CTA() {
@@ -53,12 +53,12 @@ export default function CTA() {
                 viewport={{ once: true }}
                 className="flex flex-col sm:flex-row gap-4 justify-center items-center"
               >
-                <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-50 font-bold px-6 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                  <Link href="/auth" className="flex items-center gap-2">
+                <GetStartedButton size="lg" className="bg-white text-purple-600 hover:bg-gray-50 font-bold px-6 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                  <span className="flex items-center gap-2">
                     Get Started for FREE
                     <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
+                  </span>
+                </GetStartedButton>
                 <Link href="/pricing" className="text-white/90 hover:text-white font-medium transition-colors duration-200 flex items-center gap-1">
                   View Pricing Plans
                 </Link>
