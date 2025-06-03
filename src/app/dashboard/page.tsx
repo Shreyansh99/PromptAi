@@ -21,7 +21,6 @@ import {
   Plus,
   BookOpen,
   Star,
-  Settings,
   LogOut,
   User,
   CreditCard,
@@ -190,13 +189,12 @@ export default function DashboardPage() {
                 <CreditCard className="mr-2 h-4 w-4 text-purple-600" />
                 <span className="text-slate-700">Upgrade to Pro</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer hover:bg-slate-50 focus:bg-slate-50">
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-slate-50 focus:bg-slate-50"
+                onClick={() => router.push('/dashboard/account')}
+              >
                 <User className="mr-2 h-4 w-4 text-slate-600" />
                 <span className="text-slate-700">Account</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer hover:bg-slate-50 focus:bg-slate-50">
-                <Settings className="mr-2 h-4 w-4 text-slate-600" />
-                <span className="text-slate-700">Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
