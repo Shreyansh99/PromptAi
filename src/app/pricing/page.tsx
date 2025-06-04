@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Check } from 'lucide-react'
+import { PaymentButton } from '@/components/payment/PaymentButton'
 
 const pricingPlans = [
   {
@@ -19,7 +20,7 @@ const pricingPlans = [
   },
   {
     name: 'Pro',
-    price: '$19',
+    price: '₹499',
     description: 'Best for professionals and teams',
     features: [
       'Unlimited prompts',
@@ -29,7 +30,8 @@ const pricingPlans = [
       'Custom templates',
       'Team collaboration'
     ],
-    popular: true
+    popular: true,
+    amount: 499
   }
 ]
 
@@ -75,11 +77,22 @@ const PricingPage = () => {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button
-                    className={`w-full ${plan.popular ? 'bg-gradient-to-r from-purple-600 to-blue-600' : ''}`}
-                  >
-                    Get Started
-                  </Button>
+                  {plan.name === 'Free' ? (
+                    <Button
+                      className="w-full"
+                      onClick={() => window.location.href = '/auth'}
+                    >
+                      Get Started Free
+                    </Button>
+                  ) : (
+                    <PaymentButton
+                      plan={plan.name}
+                      amount={plan.amount || 499}
+                      className={`w-full ${plan.popular ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700' : ''}`}
+                    >
+                      Upgrade to {plan.name}
+                    </PaymentButton>
+                  )}
                 </CardFooter>
               </Card>
             </motion.div>

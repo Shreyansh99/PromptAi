@@ -4,6 +4,7 @@ import "@fontsource/montserrat/700.css";
 import "@fontsource/fira-mono/400.css";
 import "./globals.css";
 import { ConditionalLayout } from "@/components/layout/conditional-layout";
+import { Toaster } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
   title: "PromptPilot - AI Prompt Optimizer",
@@ -21,6 +22,7 @@ export default function RootLayout({
         <ConditionalLayout>
           {children}
         </ConditionalLayout>
+        <Toaster />
       </body>
     </html>
   );

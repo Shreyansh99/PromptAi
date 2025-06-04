@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Check, ArrowLeft } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
+import { PaymentButton } from '@/components/payment/PaymentButton'
 
 const pricingPlans = [
   {
@@ -21,7 +22,7 @@ const pricingPlans = [
   },
   {
     name: 'Pro',
-    price: '$8.33',
+    price: '₹499',
     description: 'Best for professionals and teams',
     features: [
       'Unlimited prompt generations',
@@ -29,7 +30,8 @@ const pricingPlans = [
       'Save prompts',
       'Access to advance algorithms'
     ],
-    popular: true
+    popular: true,
+    amount: 499
   }
 ]
 
@@ -141,18 +143,26 @@ export default function DashboardPricingPage() {
                 </CardContent>
                 
                 <CardFooter>
-                  <Button 
-                    className={`w-full ${
-                      plan.popular 
-                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700' 
-                        : plan.current
-                          ? 'bg-green-500 hover:bg-green-600'
+                  {plan.name === 'Free' ? (
+                    <Button
+                      className="w-full bg-green-500 hover:bg-green-600"
+                      disabled={plan.current}
+                    >
+                      {plan.current ? 'Current Plan' : 'Free Plan'}
+                    </Button>
+                  ) : (
+                    <PaymentButton
+                      plan={plan.name}
+                      amount={plan.amount || 499}
+                      className={`w-full ${
+                        plan.popular
+                          ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700'
                           : 'bg-slate-900 hover:bg-slate-800'
-                    }`}
-                    disabled={plan.current}
-                  >
-                    {plan.current ? 'Current Plan' : 'Upgrade Now'}
-                  </Button>
+                      }`}
+                    >
+                      Upgrade to {plan.name}
+                    </PaymentButton>
+                  )}
                 </CardFooter>
               </Card>
             </motion.div>
