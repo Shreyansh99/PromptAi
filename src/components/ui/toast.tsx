@@ -56,15 +56,12 @@ export function Toaster() {
 }
 
 // Auto-dismiss toast after timeout
-export function Toast({ 
-  id, 
-  title, 
-  description, 
-  variant = 'default',
-  onDismiss 
+export function Toast({
+  id,
+  onDismiss
 }: {
   id: string
-  title: string
+  title?: string
   description?: string
   variant?: 'default' | 'destructive'
   onDismiss: (id: string) => void

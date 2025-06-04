@@ -2,6 +2,24 @@ import { NextResponse } from "next/server";
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 
+// TypeScript interfaces for Razorpay webhook payloads
+interface RazorpayPayment {
+  id: string;
+  order_id: string;
+  amount: number;
+  method: string;
+  status: string;
+  created_at: number;
+}
+
+interface RazorpayOrder {
+  id: string;
+  amount: number;
+  currency: string;
+  status: string;
+  created_at: number;
+}
+
 // Initialize Supabase with service role key
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -64,11 +82,10 @@ export async function POST(req: Request) {
   }
 }
 
-async function handlePaymentCaptured(payment: any) {
+async function handlePaymentCaptured(payment: RazorpayPayment) {
   try {
     const orderId = payment.order_id;
     const paymentId = payment.id;
-    const amount = payment.amount / 100; // Convert from paisa to rupees
 
     // Update payment record
     const { error } = await supabase
@@ -91,7 +108,7 @@ async function handlePaymentCaptured(payment: any) {
   }
 }
 
-async function handlePaymentFailed(payment: any) {
+async function handlePaymentFailed(payment: RazorpayPayment) {
   try {
     const orderId = payment.order_id;
     const paymentId = payment.id;
@@ -125,7 +142,7 @@ async function handlePaymentFailed(payment: any) {
   }
 }
 
-async function handleOrderPaid(order: any) {
+async function handleOrderPaid(order: RazorpayOrder) {
   try {
     const orderId = order.id;
     const amount = order.amount / 100; // Convert from paisa to rupees

@@ -17,9 +17,58 @@ interface RazorpayCheckoutProps {
   disabled?: boolean
 }
 
+// TypeScript interfaces for Razorpay
+interface RazorpayResponse {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
+interface RazorpayError {
+  code: string;
+  description: string;
+  source: string;
+  step: string;
+  reason: string;
+  metadata: Record<string, unknown>;
+}
+
+interface RazorpayFailureResponse {
+  error: RazorpayError;
+}
+
+interface RazorpayOptions {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  order_id: string;
+  handler: (response: RazorpayResponse) => void;
+  prefill: {
+    name: string;
+    email: string;
+  };
+  notes: {
+    userId: string;
+    plan: string;
+  };
+  theme: {
+    color: string;
+  };
+  modal: {
+    ondismiss: () => void;
+  };
+}
+
+interface RazorpayInstance {
+  open: () => void;
+  on: (event: string, handler: (response: RazorpayFailureResponse) => void) => void;
+}
+
 declare global {
   interface Window {
-    Razorpay: any
+    Razorpay: new (options: RazorpayOptions) => RazorpayInstance;
   }
 }
 
@@ -82,15 +131,21 @@ export function RazorpayCheckout({
         throw new Error(orderData.error || 'Failed to create order')
       }
 
+      // Validate Razorpay key
+      const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
+      if (!razorpayKey) {
+        throw new Error('Razorpay key not configured')
+      }
+
       // Configure Razorpay options
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      const options: RazorpayOptions = {
+        key: razorpayKey,
         amount: orderData.order.amount,
         currency: orderData.order.currency,
         name: 'PromptPilot',
         description: `${plan} Plan Subscription`,
         order_id: orderData.order.id,
-        handler: async function (response: any) {
+        handler: async function (response: RazorpayResponse) {
           try {
             // Verify payment
             const verifyResponse = await fetch('/api/razorpay/verify-payment', {
@@ -149,7 +204,7 @@ export function RazorpayCheckout({
 
       const rzp = new window.Razorpay(options)
       
-      rzp.on('payment.failed', function (response: any) {
+      rzp.on('payment.failed', function (response: RazorpayFailureResponse) {
         console.error('Payment failed:', response.error)
         toast({
           title: 'Payment Failed',

@@ -9,9 +9,9 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-export async function POST(req: Request) {
+export async function POST(_req: Request) {
   try {
-    const { plan = 'Pro' } = await req.json();
+    const { plan = 'Pro' } = await _req.json();
 
     // Get user from session
     const cookieStore = await cookies();
@@ -98,7 +98,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     // Get user from session
     const cookieStore = await cookies();
