@@ -170,18 +170,9 @@ export default function DashboardPage() {
     console.log('Dashboard: No user found, should redirect to auth')
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50/30 flex items-center justify-center">
-        <div className="text-center">
-          <div className="flex items-center gap-2 justify-center mb-4">
-            <Sparkles className="w-6 h-6 text-red-600" />
-            <span className="text-slate-600">Authentication required</span>
-          </div>
-          <p className="text-sm text-slate-500 mb-4">You need to log in to access the dashboard</p>
-          <button
-            onClick={() => router.push('/auth')}
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
-          >
-            Go to Login
-          </button>
+        <div className="flex items-center gap-2">
+          <Sparkles className="w-6 h-6 text-purple-600 animate-spin" />
+          <span className="text-slate-600">Loading...</span>
         </div>
       </div>
     )

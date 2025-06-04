@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface TokenData {
   current: number
@@ -27,11 +27,11 @@ export function useTokens() {
     canMakeRequest: false
   })
 
-  const fetchTokenData = async () => {
+  const fetchTokenData = useCallback(async () => {
     try {
       setTokenData(prev => ({ ...prev, loading: true }))
       const response = await fetch('/api/usage')
-      
+
       if (response.ok) {
         const data = await response.json()
         setTokenData({
@@ -49,7 +49,7 @@ export function useTokens() {
       console.error('Error fetching token data:', error)
       setTokenData(prev => ({ ...prev, loading: false }))
     }
-  }
+  }, [])
 
   const refreshTokens = () => {
     fetchTokenData()
