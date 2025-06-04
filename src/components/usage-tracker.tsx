@@ -1,15 +1,28 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useTokens } from '@/hooks/useTokens'
+import { useEffect } from 'react'
 
-
-
+interface UsageData {
+  tokens: {
+    current: number
+    max: number
+    per_day: number
+    unlimited: boolean
+  }
+  plan: {
+    name: string
+    display_name: string
+    is_unlimited: boolean
+  }
+  canMakeRequest: boolean
+  lastRefresh: string
+}
 
 export function UsageTracker() {
   const router = useRouter()
@@ -17,7 +30,7 @@ export function UsageTracker() {
 
   useEffect(() => {
     fetchTokenData()
-  }, [fetchTokenData])
+  }, [])
 
   if (tokenData.loading) {
     return (

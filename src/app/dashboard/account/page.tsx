@@ -37,6 +37,24 @@ export default function AccountPage() {
   const [message, setMessage] = useState('')
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
+  useEffect(() => {
+    if (user) {
+      // Extract user data
+      const firstName = user.user_metadata?.full_name?.split(' ')[0] || ''
+      const lastName = user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || ''
+
+      setProfile({
+        first_name: firstName,
+        last_name: lastName,
+        email: user.email || '',
+        subscription: 'Free' // Default to Free, will be updated from database
+      })
+
+      // Fetch subscription data from database
+      fetchSubscription()
+    }
+  }, [user, fetchSubscription])
+
   const fetchSubscription = useCallback(async () => {
     if (!user) return
 
@@ -93,27 +111,9 @@ export default function AccountPage() {
         subscription: 'Free'
       }))
     }
-  }, [user])
+  }, [user, createDefaultSubscription])
 
-  useEffect(() => {
-    if (user) {
-      // Extract user data
-      const firstName = user.user_metadata?.full_name?.split(' ')[0] || ''
-      const lastName = user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || ''
-
-      setProfile({
-        first_name: firstName,
-        last_name: lastName,
-        email: user.email || '',
-        subscription: 'Free' // Default to Free, will be updated from database
-      })
-
-      // Fetch subscription data from database
-      fetchSubscription()
-    }
-  }, [user, fetchSubscription])
-
-  const createDefaultSubscription = async () => {
+  const createDefaultSubscription = useCallback(async () => {
     if (!user) return
 
     try {
@@ -156,7 +156,7 @@ export default function AccountPage() {
         subscription: 'Free'
       }))
     }
-  }
+  }, [user])
 
   const handleSave = async () => {
     if (!user) return

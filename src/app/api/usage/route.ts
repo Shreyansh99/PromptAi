@@ -21,21 +21,8 @@ export async function GET(request: Request) {
       const token = authHeader.substring(7) // Remove 'Bearer ' prefix
       console.log('Using Authorization header token')
 
-      // Create a new supabase client with the token
-      const supabaseWithToken = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-          global: {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        }
-      )
-
-      // Get the user using the token-authenticated client
-      const { data: { user }, error: authError } = await supabaseWithToken.auth.getUser()
+      // Set the session using the token
+      const { data: { user }, error: authError } = await supabase.auth.getUser(token)
 
       if (authError || !user) {
         console.error('Auth header validation failed:', authError)
@@ -266,7 +253,7 @@ export async function GET(request: Request) {
 }
 
 // POST /api/usage - Use a token (for prompt generation)
-export async function POST() {
+export async function POST(req: Request) {
   try {
     const cookieStore = await cookies()
 
