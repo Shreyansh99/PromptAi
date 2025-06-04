@@ -66,6 +66,24 @@ export default function AuthCallbackPage() {
 
           if (sessionData.session) {
             console.log('OAuth session created successfully:', sessionData.session.user.email)
+            console.log('Session access token:', sessionData.session.access_token?.substring(0, 20) + '...')
+            console.log('Session refresh token:', sessionData.session.refresh_token?.substring(0, 20) + '...')
+
+            // Check if cookies are being set
+            console.log('Document cookies after session creation:', document.cookie)
+
+            // Initialize user subscription
+            try {
+              const initResponse = await fetch('/api/init-user', { method: 'POST' })
+              if (initResponse.ok) {
+                console.log('User initialized successfully')
+              } else {
+                console.warn('Failed to initialize user, but continuing...')
+              }
+            } catch (error) {
+              console.warn('Error initializing user:', error)
+            }
+
             setStatus('success')
             setMessage('Successfully signed in! Redirecting to dashboard...')
             setTimeout(() => router.push('/dashboard'), 1000)
@@ -88,6 +106,19 @@ export default function AuthCallbackPage() {
 
           if (sessionData.session) {
             console.log('Token session created successfully:', sessionData.session.user.email)
+
+            // Initialize user subscription
+            try {
+              const initResponse = await fetch('/api/init-user', { method: 'POST' })
+              if (initResponse.ok) {
+                console.log('User initialized successfully')
+              } else {
+                console.warn('Failed to initialize user, but continuing...')
+              }
+            } catch (error) {
+              console.warn('Error initializing user:', error)
+            }
+
             setStatus('success')
             setMessage(type === 'signup' ? 'Email confirmed successfully! Redirecting to dashboard...' : 'Successfully signed in! Redirecting to dashboard...')
             setTimeout(() => router.push('/dashboard'), 1000)

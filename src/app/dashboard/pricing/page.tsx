@@ -13,24 +13,21 @@ const pricingPlans = [
     price: '$0',
     description: 'Perfect for trying out PromptPilot',
     features: [
-      '5 prompts per day',
-      'Basic optimization',
-      'Standard support',
-      'Community access'
+      'Access to 7 bonus prompts',
+      '1 prompt generation per day after that',
+      'Limited algorithms'
     ],
     current: true
   },
   {
     name: 'Pro',
-    price: '$19',
+    price: '$8.33',
     description: 'Best for professionals and teams',
     features: [
-      'Unlimited prompts',
-      'Advanced optimization',
-      'Priority support',
-      'API access',
-      'Custom templates',
-      'Team collaboration'
+      'Unlimited prompt generations',
+      'Test and compare prompts on different models',
+      'Save prompts',
+      'Access to advance algorithms'
     ],
     popular: true
   }
