@@ -37,23 +37,50 @@ export default function AccountPage() {
   const [message, setMessage] = useState('')
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
-  useEffect(() => {
-    if (user) {
-      // Extract user data
-      const firstName = user.user_metadata?.full_name?.split(' ')[0] || ''
-      const lastName = user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || ''
+  const createDefaultSubscription = useCallback(async () => {
+    if (!user) return
 
-      setProfile({
-        first_name: firstName,
-        last_name: lastName,
-        email: user.email || '',
-        subscription: 'Free' // Default to Free, will be updated from database
-      })
+    try {
+      console.log('Creating default subscription for user:', user.id)
+      const { data, error } = await supabase
+        .from('subscriptions')
+        .insert([
+          {
+            user_id: user.id,
+            plan: 'Free',
+            status: 'active'
+          }
+        ])
+        .select()
 
-      // Fetch subscription data from database
-      fetchSubscription()
+      if (error) {
+        console.log('Error creating default subscription:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        })
+        // Still set to Free even if creation fails
+        setProfile(prev => ({
+          ...prev,
+          subscription: 'Free'
+        }))
+      } else {
+        console.log('Default subscription created successfully:', data)
+        // Update the profile with the default subscription
+        setProfile(prev => ({
+          ...prev,
+          subscription: 'Free'
+        }))
+      }
+    } catch (error) {
+      console.error('Unexpected error creating default subscription:', error)
+      // Still set to Free even if creation fails
+      setProfile(prev => ({
+        ...prev,
+        subscription: 'Free'
+      }))
     }
-  }, [user, fetchSubscription])
+  }, [user])
 
   const fetchSubscription = useCallback(async () => {
     if (!user) return
@@ -113,50 +140,23 @@ export default function AccountPage() {
     }
   }, [user, createDefaultSubscription])
 
-  const createDefaultSubscription = useCallback(async () => {
-    if (!user) return
+  useEffect(() => {
+    if (user) {
+      // Extract user data
+      const firstName = user.user_metadata?.full_name?.split(' ')[0] || ''
+      const lastName = user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || ''
 
-    try {
-      console.log('Creating default subscription for user:', user.id)
-      const { data, error } = await supabase
-        .from('subscriptions')
-        .insert([
-          {
-            user_id: user.id,
-            plan: 'Free',
-            status: 'active'
-          }
-        ])
-        .select()
+      setProfile({
+        first_name: firstName,
+        last_name: lastName,
+        email: user.email || '',
+        subscription: 'Free' // Default to Free, will be updated from database
+      })
 
-      if (error) {
-        console.log('Error creating default subscription:', {
-          code: error.code,
-          message: error.message,
-          details: error.details
-        })
-        // Still set to Free even if creation fails
-        setProfile(prev => ({
-          ...prev,
-          subscription: 'Free'
-        }))
-      } else {
-        console.log('Default subscription created successfully:', data)
-        // Update the profile with the default subscription
-        setProfile(prev => ({
-          ...prev,
-          subscription: 'Free'
-        }))
-      }
-    } catch (error) {
-      console.error('Unexpected error creating default subscription:', error)
-      // Still set to Free even if creation fails
-      setProfile(prev => ({
-        ...prev,
-        subscription: 'Free'
-      }))
+      // Fetch subscription data from database
+      fetchSubscription()
     }
-  }, [user])
+  }, [user, fetchSubscription])
 
   const handleSave = async () => {
     if (!user) return

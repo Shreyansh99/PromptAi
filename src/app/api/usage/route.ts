@@ -253,7 +253,7 @@ export async function GET(request: Request) {
 }
 
 // POST /api/usage - Use a token (for prompt generation)
-export async function POST(req: Request) {
+export async function POST() {
   try {
     const cookieStore = await cookies()
 
